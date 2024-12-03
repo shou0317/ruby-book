@@ -2,16 +2,12 @@ require 'minitest/autorun'
 
 module ConvertRgb
   extend self
-  def to_hex(*int)
-    pre = '#'
-    hex = int.map {|n| n.to_s(16).rjust(2, '0')}.join
-    pre.concat(hex)
+  def to_hex(*rgb)
+    rgb.sum('#') {|n| n.to_s(16).rjust(2, '0')}
   end
 
   def to_ints(hex)
-    hex[1..hex.length]
-      .scan(/.{1,2}/)
-      .map {|s| s.to_i(16)}
+    hex.scan(/\w\w/).map(&:hex)
   end
 end
 

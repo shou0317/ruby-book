@@ -1,9 +1,9 @@
 require 'minitest/autorun'
 
 def convert_hash_syntax(old_syntax)
-  regex = /:(\w+)\s*=>\s*([':\w]+)/
+  regex = /:(\w+)\s*=>\s*/
   old_syntax.gsub(regex) do
-    "#{$1}: #{$2}"
+    "#{$1}: "
   end
 end
 

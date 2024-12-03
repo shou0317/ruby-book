@@ -7,7 +7,7 @@ def convert_hash_syntax(old_syntax)
   end
 end
 
-class ConvertHashTest < Minitest::Test
+class ConvertHashSyntaxTest < Minitest::Test
   def test_convert_hash_syntax
     old_syntax = <<~TEXT
     {

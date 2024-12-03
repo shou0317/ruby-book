@@ -1,11 +1,7 @@
 require 'minitest/autorun'
 
 def convert_length(length,from,to)
-  unit = {
-    'm' => 1.00,
-    'ft' => 3.28,
-    'in' => 39.37
-  }
+  units = { 'm' => 1.00, 'ft' => 3.28, 'in' => 39.37 }
   (length / unit[from] * unit[to]).round(2)
 end
 

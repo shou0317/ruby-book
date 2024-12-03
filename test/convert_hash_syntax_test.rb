@@ -1,13 +1,10 @@
 require 'minitest/autorun'
 
 def convert_hash_syntax(old_syntax)
-  # <<~TEXT
-  #   {
-  #     name: 'Alice',
-  #     age: 20,
-  #     gender: :female
-  #   }
-  # TEXT
+  regex = /:(\w+)\s*=>\s*([':\w]+)/
+  old_syntax.gsub(regex) do
+    "#{$1}: #{$2}"
+  end
 end
 
 class ConvertHashTest < Minitest::Test

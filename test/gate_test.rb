@@ -8,7 +8,6 @@ class Gate
   end
 
   # ticketに自分の駅名を記録する
-  # ticket.stamp = :umeda
   def enter(ticket)
     ticket.stamp(@name)
   end
@@ -16,14 +15,12 @@ class Gate
   # 運賃と乗車駅を取得する
   # 乗車駅と自分の駅名から運賃を割り出す
   def exit(ticket)
-    gate = ticket.stamped_at #:umeda
-    ticket_fare = ticket.fare # 160
+    gate = ticket.stamped_at
+    ticket_fare = ticket.fare
 
-    if (STATION.index(@name) - STATION.index(gate)).abs == 1
-      fare = 160
-    elsif (STATION.index(@name) - STATION.index(gate)).abs == 2
-      fare = 190
-    end
+    distance = STATION.index(@name) - STATION.index(gate)
+    fare_table = { 1 => 160, 2 => 190 }
+    fare = fare_table[distance]
 
     fare == ticket_fare
   end

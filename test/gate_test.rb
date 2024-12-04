@@ -1,7 +1,8 @@
 require 'minitest/autorun'
 
 class Gate
-  STATION = [:umeda, :juso, :mikuni]
+  STATIONS = [:umeda, :juso, :mikuni]
+  FARES = [160, 190]
 
   def initialize(name)
     @name = name
@@ -12,17 +13,19 @@ class Gate
     ticket.stamp(@name)
   end
 
-  # 運賃と乗車駅を取得する
-  # 乗車駅と自分の駅名から運賃を割り出す
+  # 切符の運賃が正しいか検証する
   def exit(ticket)
-    gate = ticket.stamped_at
-    ticket_fare = ticket.fare
+    fare = calc_fare(ticket)
+    fare <= ticket.fare
+  end
 
-    distance = STATION.index(@name) - STATION.index(gate)
-    fare_table = { 1 => 160, 2 => 190 }
-    fare = fare_table[distance]
+  private
 
-    fare == ticket_fare
+  def calc_fare(ticket)
+    from = STATIONS.index(ticket.stamped_at)
+    to = STATIONS.index(@name)
+    distance = (to - from).abs
+    FARES[distance - 1]
   end
 end
 

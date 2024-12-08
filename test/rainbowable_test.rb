@@ -6,10 +6,8 @@ module Rainbowable
 
     self.to_s.each_char.map.with_index do |char, count|
       color = 31 + count % 6
-      colord_chars << "\e[#{color}m#{char}"
-    end
-
-    colord_chars.push("\e[0m").join
+      "\e[#{color}m#{char}"
+    end.push("\e[0m").join
   end
 end
 

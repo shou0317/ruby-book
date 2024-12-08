@@ -2,13 +2,11 @@ require 'minitest/autorun'
 
 module Rainbowable
   def rainbow
-    count = 0
     colord_chars = []
 
-    self.to_s.each_char do |char|
+    self.to_s.each_char.map.with_index do |char, count|
       color = 31 + count % 6
       colord_chars << "\e[#{color}m#{char}"
-      count += 1
     end
 
     colord_chars.push("\e[0m").join

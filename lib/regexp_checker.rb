@@ -1,18 +1,20 @@
-print 'Text?:'
-text = gets.chomp
+def regexp_checker_main
+  print 'Text?: '
+  text = gets.chomp
 
-begin
-  print 'Pattern?:'
-  pattern = gets.chomp
-  regexp = Regexp.new(pattern)
-rescue RegexpError => e
-  puts "Invalid pattern: #{e.message}"
-  retry
-end
+  begin
+    print 'Pattern?: '
+    pattern = gets.chomp
+    regexp = Regexp.new(pattern)
+  rescue RegexpError => e
+    puts "Invalid pattern: #{e.message}"
+    retry
+  end
 
-matches = text.scan(regexp)
-if matches.size > 0
-  puts "Matched: #{matches.join(',')}"
-else
-  puts "Nothing matched."
+  matches = text.scan(regexp)
+  if matches.size > 0
+    puts "Matched: #{matches.join(',')}"
+  else
+    puts "Nothing matched."
+  end
 end

@@ -15,7 +15,7 @@ module Effects
 
   def loud(cnt)
     ->(words) do
-      words.upcase.gsub(/[\w!]+/) {|word| word + '!' * cnt}
+      words.gsub(/[\w!]+/) {|word| word.upcase + '!' * cnt}
     end
   end
 end

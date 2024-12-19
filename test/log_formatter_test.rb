@@ -9,7 +9,7 @@ class LogFormatterTest < Minitest::Test
       {"request_id": "3", "path": "/products", "status": 200, "duration": 1023.8},
       {"request_id": "4", "path": "/dangerous", "status": 500, "duration": 43.6, "error": "Internal server error"}
     ]
-    expected = <<~TEXT
+    expected = <<~TEXT.chomp
       [OK] request_id=1, path=/products/1
       [ERROR] request_id=2, path=/wp-login.php, status=404, error=Not found
       [WARN] request_id=3, path=/products, duration=1023.8

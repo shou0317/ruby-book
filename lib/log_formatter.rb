@@ -1,17 +1,22 @@
-module LogFormatter
-  def self.format(input)
-    input.map { |hash| format_log(hash) }.join("\n")
-  end
+require 'net/http'
+require 'uri'
+require 'json'
 
-  def self.format_log(hash)
-    base = "request_id=#{hash[:request_id]}, path=#{hash[:path]}"
-    case hash
-    in {status: 404 | 500} => hash
-      "[ERROR] #{base}, status=#{hash[:status]}, error=#{hash[:error]}"
-    in {duration: 1000..} => hash
-      "[WARN] #{base}, duration=#{hash[:duration]}"
-    else
-      "[OK] #{base}"
-    end
+module LogFormatter
+  def self.format_log
+    uri = URI.parse('https://samples.jnito.com/access-log.json')
+    json = Net::HTTP.get(uri)
+    logs = JSON.parse(json, symbolize_names: true)
+
+    logs.map do |log|
+      case log
+      in {request_id:, path:, status: 404 | 500 => status, error:}
+        "[ERROR] request_id=#{request_id}, path=#{path}, status=#{status}, error=#{error}"
+      in {request_id:, path:, duration: 1000.. => duration}
+        "[WARN] request_id=#{request_id}, path=#{path}, duration=#{duration}"
+      in {request_id:, path:}
+        "[OK] request_id=#{request_id}, path=#{path}"
+      end
+    end.join("\n")
   end
 end
